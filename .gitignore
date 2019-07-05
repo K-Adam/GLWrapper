@@ -30,3 +30,10 @@
 *.exe
 *.out
 *.app
+
+# VS ( todo: replace with cmake )
+.vs
+x64
+demo/x64
+x86
+demo/x86
