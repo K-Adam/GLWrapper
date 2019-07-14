@@ -1,6 +1,7 @@
 #pragma once
 
 #include "VertexArray.h"
+#include "ResourceBuilder.h"
 
 #include <vector>
 
@@ -15,9 +16,7 @@ namespace GLWRAPPER_NS {
 		GLboolean normalized = GL_FALSE;
 	};
 
-	class VertexArrayBuilder {
-
-		VertexArray& vao;
+	class VertexArrayBuilder: public ResourceBuilder<VertexArray> {
 
 		VertexBuffer vbo;
 		IndexBuffer ibo;
@@ -27,10 +26,7 @@ namespace GLWRAPPER_NS {
 
 	public:
 
-		VertexArrayBuilder(VertexArray& vao) : vao(vao) {}
-		~VertexArrayBuilder() {
-			if (!built) Build();
-		}
+		VertexArrayBuilder(VertexArray& vao) : ResourceBuilder(vao) {}
 
 		void SetVertexBuffer(VertexBuffer&& buffer) {
 			vbo = std::move(buffer);
@@ -46,8 +42,7 @@ namespace GLWRAPPER_NS {
 
 		void Build() {
 
-			// Don't build twice
-			assert(!built);
+			ResourceBuilder::Build();
 
 			VertexArrayData vao_data;
 
@@ -88,8 +83,7 @@ namespace GLWRAPPER_NS {
 				);
 			}
 
-			vao.Reset(std::move(vao_data));
-			built = true;
+			object.Reset(std::move(vao_data));
 		}
 
 	};

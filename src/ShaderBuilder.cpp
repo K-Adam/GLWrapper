@@ -47,8 +47,7 @@ namespace GLWRAPPER_NS {
 
 	void ShaderBuilder::Build() {
 
-		// Don't build twice
-		assert(!built);
+		ResourceBuilder::Build();
 
 		ShaderData shader_data;
 
@@ -87,8 +86,7 @@ namespace GLWRAPPER_NS {
 			return;
 		}
 
-		shader.Reset(std::move(shader_data));
-		built = true;
+		object.Reset(std::move(shader_data));
 
 	}
 

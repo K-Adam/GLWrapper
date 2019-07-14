@@ -1,14 +1,13 @@
 #pragma once
 
 #include "ShaderProgram.h"
+#include "ResourceBuilder.h"
 
 #include <string>
 
 namespace GLWRAPPER_NS {
 
-	class ShaderProgramBuilder {
-
-		ShaderProgram& program;
+	class ShaderProgramBuilder: public ResourceBuilder<ShaderProgram> {
 
 		std::vector<Shader> shaders;
 		std::vector<std::pair<GLuint, std::string>> attributes;
@@ -17,10 +16,7 @@ namespace GLWRAPPER_NS {
 
 	public:
 
-		ShaderProgramBuilder(ShaderProgram& program) : program(program) {}
-		~ShaderProgramBuilder() {
-			if (!built) Build();
-		}
+		ShaderProgramBuilder(ShaderProgram& program) : ResourceBuilder(program) {}
 
 		void AttachShader(Shader& shader) {
 			// Check if the shader is built
@@ -42,8 +38,7 @@ namespace GLWRAPPER_NS {
 
 		void Build() {
 
-			// Don't build twice
-			assert(!built);
+			ResourceBuilder::Build();
 
 			ShaderProgramData program_data;
 
@@ -83,8 +78,7 @@ namespace GLWRAPPER_NS {
 
 			}
 
-			program.Reset(std::move(program_data));
-			built = true;
+			object.Reset(std::move(program_data));
 
 		}
 

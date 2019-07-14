@@ -151,10 +151,11 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\AbstractBuilder.h" />
+    <ClInclude Include="..\src\Builder.h" />
     <ClInclude Include="..\src\IndexBuffer.h" />
     <ClInclude Include="..\src\IndexBufferBuilder.h" />
     <ClInclude Include="..\src\IndexBufferImpl.h" />
+    <ClInclude Include="..\src\ResourceBuilder.h" />
     <ClInclude Include="..\src\ResourceOwner.h" />
     <ClInclude Include="..\src\Shader.h" />
     <ClInclude Include="..\src\ShaderBuilder.h" />

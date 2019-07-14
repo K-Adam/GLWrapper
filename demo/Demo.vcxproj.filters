@@ -86,9 +86,6 @@
     <ClInclude Include="..\src\ShaderProgramBuilder.h">
       <Filter>GLWrapper</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\AbstractBuilder.h">
-      <Filter>GLWrapper</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\TextureBuilder.h">
       <Filter>GLWrapper</Filter>
     </ClInclude>
@@ -102,6 +99,12 @@
       <Filter>GLWrapper</Filter>
     </ClInclude>
     <ClInclude Include="..\src\IndexBufferImpl.h">
+      <Filter>GLWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\Builder.h">
+      <Filter>GLWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ResourceBuilder.h">
       <Filter>GLWrapper</Filter>
     </ClInclude>
   </ItemGroup>

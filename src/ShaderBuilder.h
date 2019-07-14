@@ -1,14 +1,14 @@
 #pragma once
 
 #include "Shader.h"
+#include "ResourceBuilder.h"
 
 #include <string>
 
 namespace GLWRAPPER_NS {
 
-	class ShaderBuilder {
+	class ShaderBuilder: public ResourceBuilder<Shader> {
 
-		Shader& shader;
 		GLenum shader_type;
 
 		bool built = false;
@@ -17,19 +17,13 @@ namespace GLWRAPPER_NS {
 
 	public:
 
-		ShaderBuilder(Shader& shader, GLenum shader_type) : shader(shader), shader_type(shader_type) {}
-		~ShaderBuilder() {
-			if (!built) Build();
-		}
+		ShaderBuilder(Shader& shader, GLenum shader_type) : ResourceBuilder(shader), shader_type(shader_type) {}
 
 		void AppendLine(std::string line);
 		void AppendString(std::string text);
 		void AppendFile(std::string path, bool with_includes = true);
 
 		void Build();
-
-		//void LoadFromString(std::string text, GLenum shader_type);
-		//void LoadFromFile(std::string path, GLenum shader_type, bool with_includes = true);
 
 	private:
 
