@@ -39,24 +39,22 @@ namespace GLWRAPPER_NS {
 		glUniform1f(loc, fval);
 	}
 
-	void ShaderProgram::SetTexture2D(std::string uniform, GLuint textureID, int sampler) {
+	void ShaderProgram::SetTexture(std::string uniform, GLenum target, GLuint textureID, int sampler) {
 		glActiveTexture(GL_TEXTURE0 + sampler);
-		glBindTexture(GL_TEXTURE_2D, textureID);
+		glBindTexture(target, textureID);
 		SetUniform(uniform, sampler);
+	}
+	/*
+	void ShaderProgram::SetTexture2D(std::string uniform, GLuint textureID, int sampler) {
+		SetTexture(uniform, GL_TEXTURE_2D, textureID, sampler);
 	}
 
 	void ShaderProgram::SetTexture3D(std::string uniform, GLuint textureID, int sampler) {
-		glActiveTexture(GL_TEXTURE0 + sampler);
-		glBindTexture(GL_TEXTURE_3D, textureID);
-		SetUniform(uniform, sampler);
+		SetTexture(uniform, GL_TEXTURE_3D, textureID, sampler);
 	}
-
-	void ShaderProgram::SetTexture2D(std::string uniform, Texture& texture, int sampler) {
-		SetTexture2D(uniform, texture.GetId(), sampler);
-	}
-
-	void ShaderProgram::SetTexture3D(std::string uniform, Texture& texture, int sampler) {
-		SetTexture3D(uniform, texture.GetId(), sampler);
+	*/
+	void ShaderProgram::SetTexture(std::string uniform, const Texture& texture, int sampler) {
+		SetTexture(uniform, texture.Get().target, texture.GetId(), sampler);
 	}
 
 }

@@ -55,11 +55,11 @@ namespace GLWRAPPER_NS {
 		void SetUniform(std::string uniform, int ival);
 		void SetUniform(std::string uniform, float fval);
 
-		void SetTexture2D(std::string uniform, GLuint textureID, int sampler);
-		void SetTexture3D(std::string uniform, GLuint textureID, int sampler);
 
-		void SetTexture2D(std::string uniform, Texture& texture, int sampler);
-		void SetTexture3D(std::string uniform, Texture& texture, int sampler);
+		void SetTexture(std::string uniform, GLenum target, GLuint textureID, int sampler);
+		//void SetTexture2D(std::string uniform, GLuint textureID, int sampler);
+		//void SetTexture3D(std::string uniform, GLuint textureID, int sampler);
+		void SetTexture(std::string uniform, const Texture& texture, int sampler);
 
 		void Use() {
 			glUseProgram(Get().program_id);

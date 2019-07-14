@@ -11,6 +11,7 @@
 #include "../src/VertexArray.h"
 #include "../src/ShaderProgram.h"
 #include "../src/Texture.h"
+#include "../src/FrameBuffer.h"
 
 class App {
 
@@ -41,6 +42,9 @@ private:
 	gl::Texture crate_texture;
 
 	gl::ShaderProgram basic_shader;
+	gl::ShaderProgram postprocess_shader;
+
+	gl::FrameBuffer fbo;
 
 	void InitTextures();
 
@@ -50,4 +54,6 @@ private:
 	void InitShaders();
 
 	void InitGL();
+
+	void ResizeFBO();
 };

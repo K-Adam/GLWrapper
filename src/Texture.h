@@ -7,9 +7,10 @@
 namespace GLWRAPPER_NS {
 
 	struct TextureData {
-		GLuint texture_id;
+		GLuint texture_id = 0;
+		GLenum target = GL_TEXTURE_2D;
 
-		TextureData() : texture_id(0) {}
+		TextureData() {}
 		TextureData(GLuint texture_id) : texture_id(texture_id) {}
 
 		void Reset() {

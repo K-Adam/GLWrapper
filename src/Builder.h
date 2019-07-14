@@ -19,8 +19,6 @@ namespace GLWRAPPER_NS {
 		Builder(const Builder&) = delete;
 
 		virtual ~Builder() {
-			if (!built) Build();
-
 			// Should be built
 			assert(built);
 		}

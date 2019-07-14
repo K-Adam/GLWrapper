@@ -12,6 +12,7 @@
 
 #include "../src/VertexArrayBuilder.h"
 #include "../src/ShaderProgramBuilder.h"
+#include "../src/FrameBufferBuilder.h"
 
 bool App::Init(int width, int height) {
 	
@@ -40,6 +41,8 @@ void App::InitGL() {
 void App::Resize(int width, int height) {
 	canvas_width = width;
 	canvas_height = height;
+
+	ResizeFBO();
 
 	glViewport(0, 0, canvas_width, canvas_height);
 }
@@ -155,16 +158,27 @@ void App::InitCube() {
 
 void App::InitShaders() {
 
-	gl::ShaderProgramBuilder shader_builder(basic_shader);
+	{
+		gl::ShaderProgramBuilder shader_builder(basic_shader);
 
-	shader_builder.AttachShader(gl::Shader::FromFile("Shaders/basic.vert.glsl", GL_VERTEX_SHADER));
-	shader_builder.AttachShader(gl::Shader::FromFile("Shaders/basic.frag.glsl", GL_FRAGMENT_SHADER));
+		shader_builder.AttachShader(gl::Shader::FromFile("Shaders/basic.vert.glsl", GL_VERTEX_SHADER));
+		shader_builder.AttachShader(gl::Shader::FromFile("Shaders/basic.frag.glsl", GL_FRAGMENT_SHADER));
 
-	shader_builder.BindAttribute(0, "vs_in_pos");
-	shader_builder.BindAttribute(1, "vs_in_col");
-	shader_builder.BindAttribute(2, "vs_in_tex");
+		shader_builder.BindAttribute(0, "vs_in_pos");
+		shader_builder.BindAttribute(1, "vs_in_col");
+		shader_builder.BindAttribute(2, "vs_in_tex");
 
-	shader_builder.Build();
+		shader_builder.Build();
+	}
+
+	{
+		gl::ShaderProgramBuilder shader_builder(postprocess_shader);
+
+		shader_builder.AttachShader(gl::Shader::FromFile("Shaders/postprocess.vert.glsl", GL_VERTEX_SHADER));
+		shader_builder.AttachShader(gl::Shader::FromFile("Shaders/postprocess.frag.glsl", GL_FRAGMENT_SHADER));
+
+		shader_builder.Build();
+	}
 
 }
 
@@ -172,54 +186,79 @@ void App::Update() {}
 
 void App::Render() {
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	fbo.Bind([&](gl::FrameBuffer&) {
 
-	glm::mat4 P = glm::perspective(45.0f, float(canvas_width)/float(canvas_height), 1.0f, 1000.0f);
-	glm::mat4 V = glm::lookAt(
-		glm::vec3(0, 5, 8),
-		glm::vec3(0, 0, 0),
-		glm::vec3(0, 1, 0)
-	);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	basic_shader.Use([&](gl::ShaderProgram& program) {
+		glm::mat4 P = glm::perspective(45.0f, float(canvas_width)/float(canvas_height), 1.0f, 1000.0f);
+		glm::mat4 V = glm::lookAt(
+			glm::vec3(0, 5, 8),
+			glm::vec3(0, 0, 0),
+			glm::vec3(0, 1, 0)
+		);
+
+		basic_shader.Use([&](gl::ShaderProgram& program) {
 		
-		cube_geometry.Bind([&](gl::VertexArray& vao) {
+			cube_geometry.Bind([&](gl::VertexArray& vao) {
 
-			glm::mat4 MVP;
+				glm::mat4 MVP;
 
-			// Rotations
-			float angle = SDL_GetTicks() / 1000.f;
-			glm::mat4 rot =
-				glm::rotate(angle, glm::vec3(1, 0, 0))*
-				glm::rotate(angle, glm::vec3(0, 1, 0))*
-				glm::rotate(angle, glm::vec3(0, 0, 1))
-			;
+				// Rotations
+				float angle = SDL_GetTicks() / 1000.f;
+				glm::mat4 rot =
+					glm::rotate(angle, glm::vec3(1, 0, 0))*
+					glm::rotate(angle, glm::vec3(0, 1, 0))*
+					glm::rotate(angle, glm::vec3(0, 0, 1))
+				;
 
-			// Draw cubes
-			program.SetTexture2D("myTexture", crate_texture, 0);
+				// Draw cubes
+				program.SetTexture("myTexture", crate_texture, 0);
 
-			{
-				// Cube 1
-				glm::mat4 M = glm::translate(glm::vec3(-2, 0, 0))*rot;
-				MVP = P * V*M;
-				program.SetUniform("MVP", MVP);
+				{
+					// Cube 1
+					glm::mat4 M = glm::translate(glm::vec3(-2, 0, 0))*rot;
+					MVP = P * V*M;
+					program.SetUniform("MVP", MVP);
 
-				vao.DrawIndexed();
-			}
+					vao.DrawIndexed();
+				}
 
-			{
-				// Cube 2
-				glm::mat4 M = glm::translate(glm::vec3(2, 0, 0))*rot;
-				MVP = P * V*M;
-				program.SetUniform("MVP", MVP);
+				{
+					// Cube 2
+					glm::mat4 M = glm::translate(glm::vec3(2, 0, 0))*rot;
+					MVP = P * V*M;
+					program.SetUniform("MVP", MVP);
 
-				vao.DrawIndexed();
-			}
+					vao.DrawIndexed();
+				}
+
+			});
 
 		});
 
 	});
 
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	postprocess_shader.Use([&](gl::ShaderProgram& program) {
+		
+		program.SetTexture("image", fbo.GetColorBuffer(0), 0);
+
+		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+	});
+
+}
+
+void App::ResizeFBO() {
+	gl::FrameBufferBuilder builder(fbo);
+
+	builder.SetSize(canvas_width, canvas_height);
+
+	//builder.AddAttachment(gl::FrameBufferAttachment::Float4());
+	builder.AddAttachment(gl::FrameBufferAttachment::Byte4());
+
+	builder.Build();
 }
 
 void App::KeyboardDown(SDL_KeyboardEvent&) {}

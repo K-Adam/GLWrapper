@@ -57,7 +57,6 @@ namespace GLWRAPPER_NS {
 
 	bool TextureBuilder::LoadFromFile(std::string path) {
 
-		TextureData texture_data;
 
 		// Kép betöltése
 		SDL_Surface* loaded_img = IMG_Load(path.c_str());
@@ -82,30 +81,45 @@ namespace GLWRAPPER_NS {
 			return false;
 		}
 
+		_width = formattedSurf->w;
+		_height = formattedSurf->h;
+
+		auto size = formattedSurf->h*formattedSurf->pitch;
+		data.resize(size);
+		std::memcpy(data.data(), formattedSurf->pixels, size);
+
+		// Free up SDL_Surface-s
+		SDL_FreeSurface(formattedSurf);
+		SDL_FreeSurface(loaded_img);
+
+
+		return true;
+
+	}
+
+	void TextureBuilder::Generate(std::function<vec4(float u, float v)> fnc, int width, int height) {
+		// TODO
+	}
+
+	void TextureBuilder::Build() {
+		ResourceBuilder::Build();
+
+		TextureData texture_data;
+		//
+
 		// Generate OpenGL texture
 		glGenTextures(1, &texture_data.texture_id);
 
 		glBindTexture(GL_TEXTURE_2D, texture_data.texture_id);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, formattedSurf->w, formattedSurf->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, formattedSurf->pixels);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, _width, _height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data.data());
 
 		// Generate mipmap
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glGenerateMipmap(GL_TEXTURE_2D);
 
-		// Free up SDL_Surface-s
-		SDL_FreeSurface(formattedSurf);
-		SDL_FreeSurface(loaded_img);
-
 		//
-		texture.Reset(std::move(texture_data));
-
-		return true;
-
-	}
-
-	void Generate(std::function<vec4(float u, float v)> fnc, int width, int height) {
-		// TODO
+		object.Reset(std::move(texture_data));
 	}
 
 }

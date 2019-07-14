@@ -152,6 +152,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\Builder.h" />
+    <ClInclude Include="..\src\FrameBuffer.h" />
+    <ClInclude Include="..\src\FrameBufferBuilder.h" />
     <ClInclude Include="..\src\IndexBuffer.h" />
     <ClInclude Include="..\src\IndexBufferBuilder.h" />
     <ClInclude Include="..\src\IndexBufferImpl.h" />
@@ -176,6 +178,8 @@
   <ItemGroup>
     <None Include="Shaders\basic.frag.glsl" />
     <None Include="Shaders\basic.vert.glsl" />
+    <None Include="Shaders\postprocess.frag.glsl" />
+    <None Include="Shaders\postprocess.vert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
