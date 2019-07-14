@@ -9,9 +9,11 @@ namespace GLWRAPPER_NS {
 
 		T data;
 
-	public:
+	protected:
 
 		ResourceOwner() : data() {}
+
+	public:
 
 		// Disable copy
 		ResourceOwner(const ResourceOwner&) = delete;

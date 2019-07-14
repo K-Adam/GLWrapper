@@ -22,8 +22,6 @@ namespace GLWRAPPER_NS {
 		IndexBuffer ibo;
 		std::vector<VertexAttribute> attributes;
 
-		bool built = false;
-
 	public:
 
 		VertexArrayBuilder(VertexArray& vao) : ResourceBuilder(vao) {}
@@ -40,7 +38,7 @@ namespace GLWRAPPER_NS {
 			attributes.push_back(attribute);
 		}
 
-		void Build() {
+		void Build() override {
 
 			ResourceBuilder::Build();
 

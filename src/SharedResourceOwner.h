@@ -12,9 +12,12 @@ namespace GLWRAPPER_NS {
 		// raw resource data
 		T data = T();
 
-	public:
+	protected:
 
 		SharedResourceOwner() {}
+
+	public:
+
 		~SharedResourceOwner() {
 			Reset();
 		}

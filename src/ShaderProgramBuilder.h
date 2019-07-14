@@ -12,8 +12,6 @@ namespace GLWRAPPER_NS {
 		std::vector<Shader> shaders;
 		std::vector<std::pair<GLuint, std::string>> attributes;
 
-		bool built = false;
-
 	public:
 
 		ShaderProgramBuilder(ShaderProgram& program) : ResourceBuilder(program) {}
@@ -36,7 +34,7 @@ namespace GLWRAPPER_NS {
 			attributes.push_back(std::make_pair(index, name));
 		}
 
-		void Build() {
+		void Build() override {
 
 			ResourceBuilder::Build();
 

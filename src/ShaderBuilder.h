@@ -11,8 +11,6 @@ namespace GLWRAPPER_NS {
 
 		GLenum shader_type;
 
-		bool built = false;
-
 		std::string source;
 
 	public:
@@ -23,7 +21,7 @@ namespace GLWRAPPER_NS {
 		void AppendString(std::string text);
 		void AppendFile(std::string path, bool with_includes = true);
 
-		void Build();
+		void Build() override;
 
 	private:
 
