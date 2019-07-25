@@ -10,6 +10,14 @@
 // App
 #include "app.h"
 
+/*
+extern "C"
+{
+	__declspec(dllexport) unsigned long AmdPowerXpressRequestHighPerformance = 1;
+	__declspec(dllexport) unsigned long NvOptimusEnablement = 1;
+}
+*/
+
 void program_exit() {
 	SDL_Quit();
 
@@ -81,6 +89,7 @@ int main(int argc, char* args[]) {
 	glGetIntegerv(GL_MAJOR_VERSION, &glVersion.first);
 	glGetIntegerv(GL_MINOR_VERSION, &glVersion.second);
 	std::cout << "Running OpenGL " << glVersion.first << "." << glVersion.second << std::endl;
+	std::cout << glGetString(GL_VENDOR) << " - " << glGetString(GL_RENDERER) << "\n" << std::endl;
 
 	if (glVersion.first == -1 && glVersion.second == -1)
 	{

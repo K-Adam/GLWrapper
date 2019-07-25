@@ -178,6 +178,7 @@
   <ItemGroup>
     <None Include="Shaders\basic.frag.glsl" />
     <None Include="Shaders\basic.vert.glsl" />
+    <None Include="Shaders\common.glsl" />
     <None Include="Shaders\postprocess.frag.glsl" />
     <None Include="Shaders\postprocess.vert.glsl" />
   </ItemGroup>

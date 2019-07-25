@@ -127,5 +127,8 @@
     <None Include="Shaders\postprocess.frag.glsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Shaders\common.glsl">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
