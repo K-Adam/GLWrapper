@@ -42,6 +42,12 @@
     <ClCompile Include="..\src\Shader.cpp">
       <Filter>GLWrapper</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ShaderErrorParser.cpp">
+      <Filter>GLWrapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\ShaderSourceMap.cpp">
+      <Filter>GLWrapper</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h">
@@ -111,6 +117,15 @@
       <Filter>GLWrapper</Filter>
     </ClInclude>
     <ClInclude Include="..\src\FrameBufferBuilder.h">
+      <Filter>GLWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ShaderError.h">
+      <Filter>GLWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ShaderErrorParser.h">
+      <Filter>GLWrapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\ShaderSourceMap.h">
       <Filter>GLWrapper</Filter>
     </ClInclude>
   </ItemGroup>

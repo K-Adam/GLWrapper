@@ -144,7 +144,9 @@
   <ItemGroup>
     <ClCompile Include="..\src\Shader.cpp" />
     <ClCompile Include="..\src\ShaderBuilder.cpp" />
+    <ClCompile Include="..\src\ShaderErrorParser.cpp" />
     <ClCompile Include="..\src\ShaderProgram.cpp" />
+    <ClCompile Include="..\src\ShaderSourceMap.cpp" />
     <ClCompile Include="..\src\Texture.cpp" />
     <ClCompile Include="..\src\TextureBuilder.cpp" />
     <ClCompile Include="App.cpp" />
@@ -161,8 +163,11 @@
     <ClInclude Include="..\src\ResourceOwner.h" />
     <ClInclude Include="..\src\Shader.h" />
     <ClInclude Include="..\src\ShaderBuilder.h" />
+    <ClInclude Include="..\src\ShaderError.h" />
+    <ClInclude Include="..\src\ShaderErrorParser.h" />
     <ClInclude Include="..\src\ShaderProgram.h" />
     <ClInclude Include="..\src\ShaderProgramBuilder.h" />
+    <ClInclude Include="..\src\ShaderSourceMap.h" />
     <ClInclude Include="..\src\SharedResourceOwner.h" />
     <ClInclude Include="..\src\Texture.h" />
     <ClInclude Include="..\src\TextureBuilder.h" />
