@@ -16,6 +16,8 @@ namespace GLWRAPPER_NS {
 		uint16_t file;
 		ErrorType type;
 		std::string message;
+
+		std::string file_name;
 	};
 
 }

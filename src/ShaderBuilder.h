@@ -24,7 +24,7 @@ namespace GLWRAPPER_NS {
 
 	public:
 
-		ShaderBuilder(Shader& shader, GLenum shader_type) : ResourceBuilder(shader), shader_type(shader_type) {}
+		ShaderBuilder(Shader& shader, GLenum shader_type);
 
 		void AppendLine(std::string line);
 		void AppendString(std::string text);

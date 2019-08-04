@@ -7,6 +7,11 @@
 
 namespace GLWRAPPER_NS {
 
+	ShaderBuilder::ShaderBuilder(Shader& shader, GLenum shader_type) :
+		ResourceBuilder(shader),
+		shader_type(shader_type)
+	{}
+
 	std::string ShaderBuilder::DirName(std::string path) {
 		std::size_t found;
 		found = path.find_last_of("/\\");
@@ -146,8 +151,8 @@ namespace GLWRAPPER_NS {
 			while (std::getline(source, line)) {
 
 				if (ShaderErrorParser(line).Parse(error)) {
-					std::string fname = source_map.GetSourceName(error.file);
-					fprintf(stdout, "Error( Line: %d, Source: %s ): %s\n", error.line, fname.c_str(), error.message.c_str());
+					error.file_name = source_map.GetSourceName(error.file);
+					fprintf(stdout, "Error( Line: %d, Source: %s ): %s\n", error.line, error.file_name.c_str(), error.message.c_str());
 				} else {
 					// print original
 					fprintf(stdout, "%s\n", line.c_str());
