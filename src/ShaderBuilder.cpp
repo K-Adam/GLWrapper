@@ -1,3 +1,6 @@
+/**
+ * @see {@link https://github.com/K-Adam/GLWrapper}
+ */
 
 #include "ShaderBuilder.h"
 

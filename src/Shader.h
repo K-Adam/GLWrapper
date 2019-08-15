@@ -1,3 +1,7 @@
+/**
+ * @see {@link https://github.com/K-Adam/GLWrapper}
+ */
+
 #pragma once
 
 #include "SharedResourceOwner.h"

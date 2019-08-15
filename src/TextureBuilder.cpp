@@ -1,3 +1,7 @@
+/**
+ * @see {@link https://github.com/K-Adam/GLWrapper}
+ */
+
 #include "TextureBuilder.h"
 
 #include <SDL_image.h>
